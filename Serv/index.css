@@ -1,0 +1,543 @@
+:root {
+    /* 1. BACKGROUNDS */
+    --color-header-bg: #0B032D;    /* YOUR FIXED HEADER */
+    --color-bg-primary: #EEF2F6;   /* Pure White - lets the orange pop */
+    
+    /* 2. TEXT */
+    --color-text-secondary: #0B032D; /* Use the header color for text too */
+    --color-text-light: #FFFFFF;
+    
+    /* 3. ACCENTS */
+    --color-logo-accent: #FF521B;    /* CHANGE LOGO TO ORANGE */
+    --color-link-primary: #FFFFFF;
+    --color-link-hover: #FF521B;     /* Orange Hover */
+    
+    /* 4. SECONDARY ACCENTS */
+    --color-accent-primary: #FF521B; /* THE ORANGE - Use for buttons/cards */
+    --color-accent-secondary: #FF8A65; /* Lighter Orange for variety */
+    
+    --font-primary: 'Helvetica Neue', Arial, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-primary);
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    background-color: var(--color-bg-primary);
+    transition: background-color 0.3s ease;
+}
+
+/* Base containers for content */
+.container,
+.header-container,
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    margin-bottom: 0.5em;
+    font-weight: 700;
+    color: var(--color-text-secondary);
+}
+
+h1 { font-size: 2.5em; }
+h2 { font-size: 2em; margin-bottom: 1.5em; }
+h3 { font-size: 1.5em; }
+
+a {
+    text-decoration: none;
+    color: var(--color-text-secondary);
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--color-accent-primary);
+}
+
+/* --- 2. Header and Navigation --- */
+.site-header {
+    background-color: var(--color-header-bg); /* Very Dark Navy */
+    padding: 15px 0;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    
+    /* STICKY HEADER SETTINGS */
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 1.8em;
+    font-weight: 900;
+    letter-spacing: 1px;
+    color: #b5f357; /* Lime Green accent */
+}
+
+nav a {
+    color: #ECEFF1; /* Off-White for standard links */
+    margin-left: 30px;
+    font-weight: 500;
+    text-decoration: none; /* Ensures no underline */
+    transition: color 0.3s ease;
+}
+
+/* HOVER & ACTIVE EFFECTS */
+nav a:hover,
+nav a.active {
+    color: #baf364; /* Changes to Lime Green only - no lines or dots */
+}
+
+/* --- 3. Main Content - Hero Section --- */
+/* --- Hero Section Fix --- */
+.hero-section {
+    width: 100%;
+    height: 70vh;               
+    min-height: 450px;          
+    display: flex;
+    align-items: center;        /* vertically center text */
+    padding-left: 8%;           /* push text to the left like Vanta demo */
+    position: relative;
+    overflow: hidden;
+    background: transparent;
+}
+
+/* Ensure canvas created by Vanta fills the space */
+.hero-section canvas {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 10;
+    max-width: 800px;
+    padding: 0 20px;
+    text-align: left; 
+    pointer-events: none; /* Allows mouse to interact with animation behind text */
+}
+
+.hero-section h1 {
+    color: #ffffff;
+    font-size: 3.2rem;
+    font-weight: 700;
+    margin-bottom: 0.4em;
+    line-height: 1.2;
+    text-shadow: 0 0 20px rgba(0,0,0,0.9);
+}
+
+.hero-section p {
+    color: #e6e6e6;
+    font-size: 1.3rem;
+    line-height: 1.6;
+    text-shadow: 0 0 12px rgba(0,0,0,0.8);
+}
+
+.hero-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(0.8px);
+    z-index: 5;
+}
+
+/* --- 4. Section Blocks and Grid Layouts --- */
+/* Section Layout */
+.why-section {
+    padding: 80px 20px;
+    background-color: var(--color-bg-primary); /* Light Cool Gray Background */
+    text-align: center;
+    overflow: hidden; /* Prevents scrollbars during animation */
+}
+
+.content-wrapper {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Typography */
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #1C2331; /* Dark Navy */
+    margin-bottom: 10px;
+}
+
+.section-subtitle {
+    font-size: 1.1rem;
+    color: #546e7a; /* Muted Slate Blue */
+    margin-bottom: 60px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Grid Layout */
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+    padding: 10px;
+}
+
+/* --- CARD STYLING --- */
+.choose-card {
+    background-color: #FFFFFF;
+    padding: 40px 30px;
+    border-radius: 16px;
+    text-align: left;
+    position: relative;
+    
+    /* Default Shadow */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    
+    /* Top Accent Border */
+    border-top: 5px solid #FF521B; /* Orange Accent */
+    
+    /* Transition for Hover & Scroll Animation */
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), 
+                box-shadow 0.4s ease, 
+                opacity 0.8s ease, 
+                transform 0.8s ease;
+}
+
+/* Hover Effects */
+.choose-card:hover {
+    transform: translateY(-12px); /* Lifts up */
+    box-shadow: 0 20px 40px rgba(255, 82, 27, 0.15); /* Orange tinted shadow */
+}
+
+/* Icon Styling */
+.icon-wrapper {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 60px;
+    height: 60px;
+    background-color: rgba(255, 82, 27, 0.1); /* Light Orange bg */
+    border-radius: 12px;
+    margin-bottom: 25px;
+    color: #FF521B; /* Orange Icon Color */
+}
+
+.choose-card h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0344a5; /* Deep Blue title */
+    margin-bottom: 15px;
+}
+
+.choose-card p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #546e7a; /* Readable grey text */
+}
+
+/* --- ANIMATION STATES --- */
+
+/* 1. Initial State (Hidden) */
+.hidden-card {
+    opacity: 0;
+    transform: translateY(60px); /* Pushed down */
+}
+
+/* 2. Active State (Visible) - Added by JS */
+.choose-card.active {
+    opacity: 1;
+    transform: translateY(0); /* Returns to normal position */
+}
+
+/* 3. Staggered Delays (One by One effect) */
+.choose-card:nth-child(1) { transition-delay: 0.1s; }
+.choose-card:nth-child(2) { transition-delay: 0.3s; }
+.choose-card:nth-child(3) { transition-delay: 0.5s; }
+
+
+/* --- 5. Footer --- */
+.footer {
+  background: #1b1440;
+  /* deep navy purple */
+  color: #e4e4e4;
+  padding: 60px 20px 30px;
+  font-family: "Poppins", sans-serif;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 50px;
+}
+
+.footer-col h3 {
+  color: var(--color-text-light);
+  margin-bottom: 15px;
+  font-size: 20px;
+}
+
+.footer-col p {
+  line-height: 1.7;
+  font-size: 14px;
+  color: #d8d8d8;
+}
+
+.footer-col ul {
+  list-style: none;
+  margin-top: 10px;
+}
+
+.footer-col ul li {
+  margin-bottom: 8px;
+}
+
+.footer-col ul li a {
+  text-decoration: none;
+  color: #d8d8d8;
+  font-size: 14px;
+  transition: 0.3s;
+}
+
+.footer-col ul li a:hover {
+  color: #c6f500;
+  margin-left: 5px;
+}
+
+.footer-socials {
+  margin-top: 15px;
+  display: flex;
+  gap: 15px;
+}
+
+.footer-socials a img {
+  width: 28px;
+  height: 28px;
+  filter: brightness(0) invert(1);
+  opacity: 0.8;
+  transition: 0.3s;
+}
+
+.footer-socials a img:hover {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+.footer-line {
+  border: none;
+  border-top: 1px solid #2e245e;
+  margin: 40px auto 20px;
+  width: 95%;
+}
+
+.footer-bottom {
+  text-align: center;
+  color: #bbb;
+  font-size: 13px;
+}
+/* --- 6. Media Queries --- */
+@media (max-width: 768px) {
+    .header-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    nav {
+        margin-top: 15px;
+    }
+
+    nav a {
+        margin: 0 10px;
+    }
+
+    /* Updated Hero responsiveness */
+    .hero-section {
+        height: 300px;
+    }
+
+    .hero-section h1 {
+        font-size: 2.5em;
+    }
+
+    .footer-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .footer-links {
+        margin-top: 15px;
+    }
+
+    .site-footer p,
+    .site-footer a {
+        margin: 5px 0;
+    }
+}
+
+
+
+/* --- WORK SECTION LAYOUT --- */
+.work-section {
+    background-color: #1C2331; /* Dark Navy Background */
+    padding: 100px 20px;
+    position: relative;
+}
+
+.work-container {
+    max-width: 1000px; /* Narrower width for better focus */
+    margin: 0 auto;
+}
+
+.text-light { color: #FFFFFF; }
+.text-light-muted { color: #B0BEC5; margin-bottom: 60px; }
+
+/* --- STICKY CARD LOGIC --- */
+.project-card {
+    display: flex;
+    flex-direction: row; /* Side by side layout */
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    
+    background-color: #F4F7F9; /* Light card background */
+    border-radius: 24px;
+    padding: 40px;
+    margin-bottom: 60px; /* Space between cards */
+    
+    /* THE MAGIC: Sticky Positioning */
+    position: sticky;
+    top: 120px; /* Distance from top where card 'sticks' */
+    
+    /* Visual styling */
+    box-shadow: 0 -10px 40px rgba(0,0,0,0.2); /* Shadow on top to separate stacked cards */
+    text-decoration: none;
+    color: #0a1f35;
+    transition: transform 0.3s ease;
+    overflow: hidden;
+}
+
+/* Make consecutive cards stack slightly lower so previous titles are visible */
+.project-card:nth-child(3) { top: 140px; }
+.project-card:nth-child(4) { top: 160px; }
+.project-card:nth-child(5) { top: 180px; }
+
+/* Hover Effect */
+.project-card:hover {
+    transform: scale(1.02); /* Slight grow */
+}
+
+/* --- CARD CONTENT --- */
+.card-content {
+    flex: 1;
+    min-width: 300px;
+}
+
+.project-tag {
+    display: inline-block;
+    padding: 6px 12px;
+    background-color: rgba(255, 82, 27, 0.1);
+    color: #FF521B; /* Orange Accent */
+    font-weight: 700;
+    font-size: 0.8em;
+    border-radius: 50px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+.project-card h3 {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 10px;
+    color: #1C2331;
+}
+
+.project-card p {
+    font-size: 1rem;
+    color: #546e7a;
+    margin-bottom: 25px;
+}
+
+.btn-text {
+    font-weight: 700;
+    color: #0344a5;
+    transition: margin-left 0.3s ease;
+}
+
+.project-card:hover .btn-text {
+    margin-left: 10px; /* Arrow moves on hover */
+}
+
+/* --- BROWSER MOCKUP (IMAGE) --- */
+.browser-mockup {
+    flex: 1.5;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    overflow: hidden;
+    position: relative;
+    border: 1px solid #ddd;
+}
+
+.browser-header {
+    background-color: #f1f1f1;
+    padding: 10px 15px;
+    display: flex;
+    gap: 6px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+}
+.red { background-color: #ff5f56; }
+.yellow { background-color: #ffbd2e; }
+.green { background-color: #27c93f; }
+
+.browser-mockup img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 768px) {
+    .project-card {
+        flex-direction: column-reverse; /* Stack image on top of text on mobile */
+        padding: 20px;
+        top: 80px !important; /* Reset sticky offset for mobile */
+    }
+    
+    .browser-mockup {
+        width: 100%;
+        margin-bottom: 20px;
+    }
+    
+    .card-content {
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* --- TEAM SECTION STYLING --- */
