@@ -5,41 +5,734 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SETUZ | Professional Digital Services</title>
-    <link rel="stylesheet" href="index.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Plus+Jakarta+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- CSS VARIABLES & RESET --- */
+        :root {
+            /* 1. BACKGROUNDS (UPDATED to Deep Nebula) */
+            --bg-body: #030014;          /* Deep Void Purple */
+            --bg-surface: #0f0b1e;       /* Dark Violet Surface */
+            --bg-surface-2: #18122b;     /* Lighter Violet Surface */
+            --bg-glass: rgba(15, 11, 30, 0.7);
+
+            /* 2. TEXT */
+            --text-main: #ffffff;
+            --text-muted: #a3a3c2;       /* Cool Grey */
+            --text-dark: #000000;
+
+            /* 3. ACCENTS (Modern Purple/Pink Gradient) */
+            --accent-primary: #8b5cf6;   /* Violet */
+            --accent-secondary: #ec4899; /* Pink */
+            --accent-glow: rgba(139, 92, 246, 0.5);
+            
+            /* Gradient for text */
+            --gradient-text: linear-gradient(135deg, #c4b5fd 0%, #8b5cf6 100%);
+            --gradient-border: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+
+            /* 4. FONTS */
+            --font-head: 'Outfit', sans-serif;
+            --font-body: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            cursor: none;
+        }
+
+        body {
+            font-family: var(--font-body);
+            line-height: 1.6;
+            color: var(--text-main);
+            background-color: var(--bg-body);
+            /* NEW: Subtle Global Gradient Mesh */
+            background-image: 
+                radial-gradient(circle at 0% 0%, rgba(139, 92, 246, 0.08), transparent 40%),
+                radial-gradient(circle at 100% 100%, rgba(236, 72, 153, 0.08), transparent 40%);
+            background-attachment: fixed; /* Parallax feel */
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a,button,input{
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+            cursor: none;
+        }
+
+         .cursor-dot {
+            width: 8px;
+            height: 8px;
+            background-color: #fff;
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9999;
+            pointer-events: none;
+            box-shadow: 0 0 15px var(--accent-primary);
+        }
+
+        .cursor-outline {
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            position: fixed;
+            top: 0;
+            left: 0;
+            transform: translate(-50%, -50%);
+            border-radius: 50%;
+            z-index: 9998;
+            pointer-events: none;
+            transition: width 0.2s, height 0.2s, background-color 0.2s, border-color 0.2s;
+        }
+
+        /* Cursor Hover State (Expanded) */
+        body.hovering .cursor-outline {
+            width: 70px;
+            height: 70px;
+            background-color: rgba(139, 92, 246, 0.1);
+            border-color: var(--accent-primary);
+            backdrop-filter: blur(2px);
+        }
+
+        /* --- HEADER --- */
+        .site-header {
+            background-color: rgba(3, 0, 20, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: var(--font-head);
+            font-size: 1.8em;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(to right, #fff, #a78bfa);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        nav a {
+            color: var(--text-muted);
+            margin-left: 30px;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        nav a:hover,
+        nav a.active {
+            color: #fff;
+            text-shadow: 0 0 10px rgba(139, 92, 246, 0.4);
+        }
+
+        /* --- HERO SECTION --- */
+        .hero-section {
+            width: 100%;
+            height: 85vh;
+            min-height: 550px;
+            display: flex;
+            align-items: center;
+            padding-left: 10%;
+            position: relative;
+            overflow: hidden;
+            /* Fallback color matches new theme */
+            background: var(--bg-body); 
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 800px;
+            padding: 0 20px;
+            pointer-events: none;
+        }
+
+        .hero-section h1 {
+            font-family: var(--font-head);
+            color: #ffffff;
+            font-size: 4.5rem; /* Larger font */
+            font-weight: 800;
+            margin-bottom: 0.2em;
+            line-height: 1.05;
+            letter-spacing: -2px;
+            background: linear-gradient(180deg, #FFFFFF 0%, #A5B4FC 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 20px rgba(139, 92, 246, 0.3));
+        }
+
+        .hero-section p {
+            color: var(--text-muted);
+            font-size: 1.3rem;
+            max-width: 500px;
+            margin-top: 20px;
+            border-left: 3px solid var(--accent-primary);
+            padding-left: 20px;
+        }
+
+        /* --- SHARED SECTION STYLES --- */
+        .content-wrapper {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            font-family: var(--font-head);
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #fff;
+            letter-spacing: -1px;
+        }
+
+        .section-subtitle {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            margin-bottom: 70px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* --- SERVICES & WHY CHOOSE US --- */
+        .why-section {
+            padding: 120px 0;
+            text-align: center;
+            background-color: transparent; /* Uses body gradient */
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            padding: 10px;
+        }
+
+        .choose-card {
+            background: var(--bg-surface);
+            padding: 50px 35px;
+            border-radius: 24px;
+            text-align: left;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
+        }
+
+        .choose-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at top right, rgba(139, 92, 246, 0.1), transparent 40%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .choose-card:hover::before {
+            opacity: 1;
+        }
+
+        .choose-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(139, 92, 246, 0.3);
+            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.7);
+            background: var(--bg-surface-2);
+        }
+
+        .icon-wrapper {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.2), rgba(236, 72, 153, 0.1));
+            border-radius: 16px;
+            margin-bottom: 30px;
+            color: #a78bfa;
+            border: 1px solid rgba(167, 139, 250, 0.2);
+        }
+
+        .choose-card h3 {
+            font-family: var(--font-head);
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .choose-card p {
+            color: var(--text-muted);
+            margin-bottom: 8px;
+            font-size: 1rem;
+        }
+
+        /* --- DARK MODE VARIANT (Why Choose Us) --- */
+        .why-section.dark-mode {
+            background-color: rgba(0,0,0,0.2); /* Slight darken overlay */
+        }
+        
+        .why-section.dark-mode .choose-card {
+            background-color: rgba(255,255,255,0.03); /* Glassy feel */
+            backdrop-filter: blur(5px);
+        }
+
+
+        /* --- WORK SECTION (Sticky Cards) --- */
+        .work-section {
+            background-color: rgba(0,0,0,0.3);
+            padding: 120px 20px;
+            position: relative;
+            /* Gradient blended with body */
+        }
+
+        .work-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .text-light { color: #FFFFFF; }
+        .text-light-muted { color: var(--text-muted); margin-bottom: 80px; }
+
+        .project-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 50px;
+            background: rgba(20, 15, 35, 0.6); /* Tinted Glass */
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 30px;
+            padding: 50px;
+            margin-bottom: 80px;
+            
+            /* Sticky Logic */
+            position: sticky;
+            top: 120px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease;
+            overflow: hidden;
+        }
+
+        /* Stacking effect offsets */
+        .project-card:nth-child(3) { top: 140px; }
+        .project-card:nth-child(4) { top: 160px; }
+        .project-card:nth-child(5) { top: 180px; }
+        .project-card:nth-child(6) { top: 200px; }
+
+        .project-card:hover {
+            transform: scale(1.02);
+            border-color: rgba(139, 92, 246, 0.3);
+            background: rgba(25, 20, 45, 0.7);
+        }
+
+        .card-content {
+            flex: 1;
+            min-width: 280px;
+        }
+
+        .project-tag {
+            display: inline-block;
+            padding: 8px 16px;
+            background: rgba(139, 92, 246, 0.15);
+            color: #a78bfa;
+            font-weight: 700;
+            font-size: 0.75em;
+            border-radius: 50px;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .project-card h3 {
+            font-family: var(--font-head);
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: #fff;
+        }
+
+        .project-card p {
+            color: var(--text-muted);
+            margin-bottom: 25px;
+        }
+
+        .btn-text {
+            font-weight: 700;
+            color: #fff;
+            margin-top: 10px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .btn-text::after {
+            content: '→';
+            transition: transform 0.3s ease;
+        }
+        
+        .project-card:hover .btn-text::after {
+            transform: translateX(5px);
+        }
+
+        .browser-mockup {
+            flex: 1.5;
+            background-color: #1e1e24;
+            border-radius: 16px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.05);
+            position: relative;
+        }
+
+        /* Add a sheen to mockups */
+        .browser-mockup::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: linear-gradient(105deg, transparent 40%, rgba(255,255,255,0.03) 45%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .browser-header {
+            background-color: #121215;
+            padding: 12px 15px;
+            display: flex;
+            gap: 8px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .dot { width: 10px; height: 10px; border-radius: 50%; opacity: 0.6; }
+        .red { background-color: #ff5f56; }
+        .yellow { background-color: #ffbd2e; }
+        .green { background-color: #27c93f; }
+
+        .browser-mockup img {
+            width: 100%;
+            height: auto;
+            display: block;
+            opacity: 0.9;
+        }
+
+
+        /* --- TEAM SECTION --- */
+        .team-section {
+            padding: 120px 0;
+            background-color: transparent;
+            text-align: center;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .team-card {
+            background: transparent;
+            border-radius: 0;
+            overflow: visible;
+            box-shadow: none;
+            border: none;
+            transition: transform 0.3s ease;
+        }
+
+        .image-box {
+            height: 320px;
+            width: 100%;
+            border-radius: 20px;
+            background-color: #18122b;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            filter: grayscale(100%) contrast(1.1); /* Cool effect: B&W until hover */
+        }
+
+        .team-card:hover .image-box img {
+            transform: scale(1.05);
+            filter: grayscale(0%) contrast(1);
+        }
+
+        .team-info { padding: 0; text-align: left; }
+
+        .team-info h3 {
+            font-family: var(--font-head);
+            margin-bottom: 5px;
+            color: #fff;
+            font-size: 1.4rem;
+        }
+
+        .team-info .role {
+            display: block;
+            color: var(--accent-primary);
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .team-socials a {
+            margin-right: 15px;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            position: relative;
+        }
+        
+        .team-socials a::before {
+            content: '';
+            position: absolute;
+            bottom: -2px; left: 0; width: 0%; height: 1px;
+            background-color: #fff;
+            transition: width 0.3s ease;
+        }
+
+        .team-socials a:hover { color: #fff; }
+        .team-socials a:hover::before { width: 100%; }
+
+
+        /* --- FOOTER --- */
+        .footer {
+            background: #02000d; /* Darkest void */
+            color: var(--text-muted);
+            padding: 80px 20px 40px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 60px;
+        }
+
+        .footer-col h3 {
+            font-family: var(--font-head);
+            color: #fff;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            letter-spacing: 0.5px;
+        }
+
+        .footer-col p {
+            line-height: 1.7;
+            font-size: 0.95rem;
+            color: #8892b0;
+        }
+
+        .footer-col ul { list-style: none; }
+        .footer-col ul li { margin-bottom: 12px; }
+
+        .footer-col ul li a {
+            color: #8892b0;
+            font-size: 0.95rem;
+            transition: 0.3s;
+        }
+
+        .footer-col ul li a:hover {
+            color: #fff;
+            padding-left: 5px;
+            text-shadow: 0 0 10px rgba(139, 92, 246, 0.4);
+        }
+
+        .footer-socials {
+            margin-top: 25px;
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-socials svg {
+            width: 22px;
+            height: 22px;
+            stroke: #8892b0;
+            transition: 0.3s;
+        }
+
+        .footer-socials a:hover svg {
+            stroke: #fff;
+            transform: translateY(-3px);
+            filter: drop-shadow(0 0 5px rgba(255,255,255,0.5));
+        }
+
+        .footer-line {
+            border: none;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            margin: 60px auto 30px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            color: #555;
+            font-size: 0.85rem;
+        }
+
+
+        /* --- ANIMATIONS (Scroll Reveal) --- */
+        .hidden-card {
+            opacity: 0;
+            transform: translateY(40px);
+        }
+
+        .choose-card.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .choose-card:nth-child(1) { transition-delay: 0.1s; }
+        .choose-card:nth-child(2) { transition-delay: 0.2s; }
+        .choose-card:nth-child(3) { transition-delay: 0.3s; }
+
+
+        /* --- RESPONSIVE MEDIA QUERIES --- */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                padding-bottom: 15px;
+            }
+
+            nav {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+                margin-top: 20px;
+                width: 100%;
+                background: rgba(255, 255, 255, 0.03);
+                padding: 20px;
+                border-radius: 12px;
+                text-align: center;
+                border: 1px solid rgba(255,255,255,0.05);
+            }
+
+            nav a {
+                margin: 0;
+                font-size: 1.1rem;
+                padding-bottom: 8px;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            }
+
+            nav a:last-child {
+                border-bottom: none;
+            }
+
+            .hero-section {
+                height: 60vh;
+                min-height: 450px;
+                padding-left: 20px;
+                align-items: center; 
+                justify-content: center; /* Center text on mobile */
+                text-align: center;
+            }
+
+            .hero-content {
+                max-width: 100%;
+            }
+
+            .hero-section h1 {
+                font-size: 3rem;
+            }
+            
+            .hero-section p {
+                margin: 20px auto 0;
+                border-left: none; /* Remove border on center align */
+                padding-left: 0;
+            }
+
+            .project-card {
+                flex-direction: column-reverse;
+                padding: 30px 20px;
+                top: 80px !important;
+            }
+
+            .browser-mockup {
+                width: 100%;
+                margin-bottom: 30px;
+            }
+
+            .card-content {
+                width: 100%;
+                text-align: center;
+            }
+
+            .btn-text {
+                margin-top: 20px;
+                justify-content: center;
+            }
+            * {cursor: auto;}
+            .cursor-dot,.cursor-outline{display: none;}
+        }
+    </style>
 </head>
 
 <body>
+    <div class="cursor-dot"></div>
+    <div class="cursor-outline"></div>
+
     <header class="site-header">
         <div class="header-container">
             <div class="logo">SETUZ</div>
             <nav>
-                <a href="/">Home</a>
-                <a href="/service" class="active">Services</a>
-                <a href="/about">About</a>
-                <a href="/contact">Contact</a>
+                <a href="#vanta-hero">Home</a>
+                <a href="#services">Services</a>
+                <a href="#work-section">Work</a>
+                <a href="#team">Team</a>
+                <a href="#contact">Contact</a>
             </nav>
         </div>
     </header>
 
-    <main class="services-page">
+    <main>
+        <!-- HERO SECTION -->
         <section class="hero-section" id="vanta-hero">
             <div class="hero-content">
-                <h1>Professional Digital Services</h1>
-                <p>High-quality solutions for creators, brands, and digital businesses.</p>
+                <h1>Professional<br>Digital Services.</h1>
+                <p>We craft high-quality digital solutions for creators, brands, and future-forward businesses.</p>
             </div>
         </section>
 
-        <!--  WHAT WE OFER Section -->
-
-        <section id="why-choose-us" class="why-section">
+        <!-- WHAT WE OFFER Section -->
+        <section id="services" class="why-section">
             <div class="content-wrapper">
-                <h2 class="section-title">What we offer</h2>
-                <p class="section-subtitle">We bring precision and passion to every project.</p>
+                <h2 class="section-title">What We Offer</h2>
+                <p class="section-subtitle">Comprehensive solutions for the modern web.</p>
 
                 <div class="cards-container">
                     <div class="choose-card hidden-card">
                         <div class="icon-wrapper">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round">
                                 <circle cx="12" cy="12" r="10"></circle>
@@ -48,14 +741,14 @@
                         </div>
                         <h3>Website Design</h3>
                         <p>Responsive, SEO-friendly websites.</p>
-                        <p>Landing pages * portfolios</p>
+                        <p>Landing pages • Portfolios</p>
                         <p>E-commerce setup</p>
-                        <p>SEO & performance basics</p>
+                        <p>Performance Optimization</p>
                     </div>
 
                     <div class="choose-card hidden-card">
                         <div class="icon-wrapper">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round">
                                 <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
@@ -66,14 +759,13 @@
                         </div>
                         <h3>Video Editing & Motion</h3>
                         <p>Reels, shorts & cinematic edits.</p>
-                        <p>Reel / short edits</p>
                         <p>Branding animations</p>
                         <p>Color grading & audio mix</p>
                     </div>
 
                     <div class="choose-card hidden-card">
                         <div class="icon-wrapper">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round">
                                 <polygon
@@ -82,17 +774,16 @@
                             </svg>
                         </div>
                         <h3>Social Media Management</h3>
-                        <p>Strategy</p>
-                        <p>Growth</p>
+                        <p>Strategy & Growth</p>
                         <p>Content Planning</p>
+                        <p>Analytics & Reporting</p>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- WHY CHOOSE US Section -->
-
-        <section id="why-choose-us" class="why-section">
+        <section id="why-choose-us" class="why-section dark-mode">
             <div class="content-wrapper">
                 <h2 class="section-title">Why Choose Us</h2>
                 <p class="section-subtitle">We bring precision and passion to every project.</p>
@@ -100,7 +791,7 @@
                 <div class="cards-container">
                     <div class="choose-card hidden-card">
                         <div class="icon-wrapper">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round">
                                 <circle cx="12" cy="12" r="10"></circle>
@@ -108,13 +799,13 @@
                             </svg>
                         </div>
                         <h3>Fast Delivery</h3>
-                        <p>We ensure your projects are completed quickly without sacrificing quality, keeping you ahead
-                            of the competition.</p>
+                        <p>We ensure your projects are completed quickly without sacrificing quality, keeping you ahead of
+                            the competition.</p>
                     </div>
 
                     <div class="choose-card hidden-card">
                         <div class="icon-wrapper">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round">
                                 <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
@@ -130,7 +821,7 @@
 
                     <div class="choose-card hidden-card">
                         <div class="icon-wrapper">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"
+                            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24"
                                 fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                                 stroke-linejoin="round">
                                 <polygon
@@ -150,14 +841,16 @@
         <section id="work-section" class="work-section">
             <div class="work-container">
                 <h2 class="section-title text-light">Explore Our Work</h2>
-                <p class="text-light-muted">Scroll to see our latest digital creations.</p>
+                <p class="section-subtitle text-light-muted">Scroll to see our latest digital creations.</p>
 
-                <a href="https://example.com/project1" target="_blank" class="project-card">
+                <!-- Project 1 -->
+                <a href="#" class="project-card">
                     <div class="card-content">
                         <span class="project-tag">SAAS PLATFORM</span>
-                        <h3>Civic eye website</h3>
-                        <p>A high-performance online store with custom 3D interactions.</p>
-                        <div class="btn-text">Visit Website &rarr;</div>
+                        <h3>Civic Eye Website</h3>
+                        <p>A high-performance online store with custom 3D interactions and real-time data visualization.
+                        </p>
+                        <div class="btn-text">View Case Study</div>
                     </div>
                     <div class="browser-mockup">
                         <div class="browser-header">
@@ -165,16 +858,19 @@
                             <span class="dot yellow"></span>
                             <span class="dot green"></span>
                         </div>
-                        <img src="/src/1.png" alt="Project 1">
+                        <!-- Placeholder Image -->
+                        <img src="https://placehold.co/800x500/030305/ffffff?text=Civic+Eye+Dashboard"
+                            alt="Project 1">
                     </div>
                 </a>
 
-                <a href="https://example.com/project2" target="_blank" class="project-card">
+                <!-- Project 2 -->
+                <a href="#" class="project-card">
                     <div class="card-content">
                         <span class="project-tag">E-COMMERCE</span>
                         <h3>Creative Agency Portfolio</h3>
-                        <p>Minimalist design focusing on typography and motion.</p>
-                        <div class="btn-text">Visit Website &rarr;</div>
+                        <p>Minimalist design focusing on typography and motion to highlight artistic work.</p>
+                        <div class="btn-text">View Case Study</div>
                     </div>
                     <div class="browser-mockup">
                         <div class="browser-header">
@@ -182,16 +878,17 @@
                             <span class="dot yellow"></span>
                             <span class="dot green"></span>
                         </div>
-                        <img src="/src/2.png" alt="Project 2">
+                        <img src="https://placehold.co/800x500/0f0f11/ffffff?text=Agency+Portfolio" alt="Project 2">
                     </div>
                 </a>
 
-                <a href="https://example.com/project3" target="_blank" class="project-card">
+                <!-- Project 3 -->
+                <a href="#" class="project-card">
                     <div class="card-content">
-                        <span class="project-tag">SaaS Platform</span>
-                        <h3>Data Analytics Dashboard</h3>
-                        <p>Complex data visualization made simple and responsive.</p>
-                        <div class="btn-text">Visit Website &rarr;</div>
+                        <span class="project-tag">Data Viz</span>
+                        <h3>Analytics Dashboard</h3>
+                        <p>Complex data visualization made simple and responsive for enterprise users.</p>
+                        <div class="btn-text">View Case Study</div>
                     </div>
                     <div class="browser-mockup">
                         <div class="browser-header">
@@ -199,110 +896,213 @@
                             <span class="dot yellow"></span>
                             <span class="dot green"></span>
                         </div>
-                        <img src="/src/3.png" alt="Project 3">
+                        <img src="https://placehold.co/800x500/18181b/ffffff?text=Analytics+Dashboard"
+                            alt="Project 3">
                     </div>
                 </a>
+
+                <!-- Project 4 (NEW) -->
+                <a href="#" class="project-card">
+                    <div class="card-content">
+                        <span class="project-tag">FINTECH APP</span>
+                        <h3>NeoBank Mobile App</h3>
+                        <p>A secure, intuitive mobile banking experience featuring biometric authentication and dark mode.</p>
+                        <div class="btn-text">View Case Study</div>
+                    </div>
+                    <div class="browser-mockup">
+                        <div class="browser-header">
+                            <span class="dot red"></span>
+                            <span class="dot yellow"></span>
+                            <span class="dot green"></span>
+                        </div>
+                        <img src="https://placehold.co/800x500/4c1d95/ffffff?text=NeoBank+App"
+                            alt="Project 4">
+                    </div>
+                </a>
+
+            </div>
+        </section>
+
+        <!-- TEAM SECTION -->
+        <section id="team" class="team-section">
+            <div class="content-wrapper">
+                <h2 class="section-title">Meet the Experts</h2>
+                <p class="section-subtitle">The creative minds behind your success.</p>
+
+                <div class="team-grid">
+                    <!-- Member 1 -->
+                    <div class="team-card">
+                        <div class="image-box">
+                            <img src="https://ui-avatars.com/api/?name=Alex+D&background=0f0f11&color=fff&size=400"
+                                alt="Alex">
+                        </div>
+                        <div class="team-info">
+                            <h3>Alex Doe</h3>
+                            <span class="role">Lead Developer</span>
+                            <div class="team-socials">
+                                <a href="#">LinkedIn</a>
+                                <a href="#">GitHub</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Member 2 -->
+                    <div class="team-card">
+                        <div class="image-box">
+                            <img src="https://ui-avatars.com/api/?name=Sarah+M&background=18181b&color=fff&size=400"
+                                alt="Sarah">
+                        </div>
+                        <div class="team-info">
+                            <h3>Sarah M.</h3>
+                            <span class="role">Creative Director</span>
+                            <div class="team-socials">
+                                <a href="#">LinkedIn</a>
+                                <a href="#">Behance</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Member 3 -->
+                    <div class="team-card">
+                        <div class="image-box">
+                            <img src="https://ui-avatars.com/api/?name=James+K&background=050505&color=fff&size=400"
+                                alt="James">
+                        </div>
+                        <div class="team-info">
+                            <h3>James K.</h3>
+                            <span class="role">SEO Specialist</span>
+                            <div class="team-socials">
+                                <a href="#">LinkedIn</a>
+                                <a href="#">Twitter</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
 
-    <!-- OUR TEAM SECTION -->
+    <footer class="footer" id="contact">
+        <div class="footer-container">
+            <div class="footer-col">
+                <h3>About Our Services</h3>
+                <p>
+                    Our team brings expertise in Web Development, Video Editing,
+                    and Graphic Design to deliver digital solutions that elevate
+                    your brand. We focus on innovation, quality, and results.
+                </p>
+            </div>
+            <div class="footer-col">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#vanta-hero">Home</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#work-section">Work</a></li>
+                    <li><a href="#team">Team</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h3>Contact Us</h3>
+                <p>Mangalore, Karnataka, India</p>
+                <p>+91 8884852258</p>
+                <p>business@setuz.in</p>
 
-
-    <footer class="footer">
-                <div class="footer-container">
-                    <div class="footer-col">
-                        <h3>About Our Services</h3>
-                        <p>
-                            Our team brings expertise in Web Development, Video Editing,
-                            and Graphic Design to deliver digital solutions that elevate
-                            your brand. We focus on innovation, quality, and results—ensuring
-                            every project supports your business growth. Dedicated to your
-                            success, we offer custom services crafted around your specific needs.
-                        </p>
-                    </div>
-                    <div class="footer-col">
-                        <h3>Quick Links</h3>
-                        <ul>
-                            <li><a href="/">Home</a></li>
-                            <li><a href="/services">Services</a></li>
-                            <li><a href="/professionals">Professionals</a></li>
-                            <li><a href="/join">Join Us</a></li>
-                            <li><a href="/about">About Us</a></li>
-                            <li><a href="/terms">Terms and Conditions</a></li>
-                        </ul>
-                    </div>
-                    <div class="footer-col">
-                        <h3>Contact Us</h3>
-                        <p>Mangalore, Karnataka, India</p>
-                        <p>+91 8884852258</p>
-                        <p>business@setuz.in</p>
-
-                        <div className="footer-socials">
-                            <a href="#">
-                                <img src="/icons/linkedin.svg" alt="LinkedIn" />
-                            </a>
-                            <a href="#">
-                                <img src="/icons/instagram.svg" alt="Instagram" />
-                            </a>
-                            <a href="#">
-                                <img src="/icons/youtube.svg" alt="Git-Hub" />
-                            </a>
-                        </div>
-                    </div>
+                <div class="footer-socials">
+                    <a href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z">
+                            </path>
+                            <rect x="2" y="9" width="4" height="12"></rect>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                    </a>
+                    <a href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                        </svg>
+                    </a>
                 </div>
-                <hr class="footer-line" />
+            </div>
+        </div>
+        <hr class="footer-line" />
+        <div class="footer-bottom">
+            © 2025 SETUZ Media. All Rights Reserved
+        </div>
+    </footer>
 
-                <div class="footer-bottom">
-                    © 2025 SETUZ Media. All Rights Reserved
-                </div>
-            </footer>
+    <!-- SCRIPTS -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanta/0.5.24/vanta.rings.min.js"></script>
 
     <script>
-        VANTA.RINGS({
-            el: "#vanta-hero", // This must match the ID you added in Step 1
-            mouseControls: true,
-            touchControls: true,
-            gyroControls: false,
-            minHeight: 200.00,
-            minWidth: 200.00,
-            scale: 1.00,
-            scaleMobile: 1.00,
-            backgroundColor: 0x0, /* Your Dark Navy Background */
-            color: 0xC3E88D            /* Your Lime Green Accent */
-        })
-    </script>
-    <script>
         document.addEventListener("DOMContentLoaded", function () {
-            // 1. Select all elements that need to be animated
-            const cards = document.querySelectorAll('.hidden-card');
+            // 1. Initialize Vanta Background (Color Adjusted to Deep Void Purple)
+            try {
+                VANTA.RINGS({
+                    el: "#vanta-hero",
+                    mouseControls: true,
+                    touchControls: true,
+                    gyroControls: false,
+                    minHeight: 200.00,
+                    minWidth: 200.00,
+                    scale: 1.00,
+                    scaleMobile: 1.00,
+                    backgroundColor: 0x030014, /* Deep Void Purple */
+                    color: 0x8b5cf6            /* Violet Accent */
+                });
+            } catch (e) {
+                console.log("Vanta JS error (likely due to iframe/context):", e);
+            }
 
-            // 2. Define the observer options
+            // 2. Scroll Animation (Intersection Observer)
             const observerOptions = {
-                root: null,   // Use the viewport as the root
-                threshold: 0.2 // Trigger when 20% of the card is visible
+                root: null,
+                threshold: 0.15 
             };
 
-            // 3. Create the IntersectionObserver
             const observer = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
-                    // If the element is visible
                     if (entry.isIntersecting) {
-                        // Add the class that triggers the CSS animation
                         entry.target.classList.add('active');
-
-                        // Stop observing this element (so it only animates once)
                         observer.unobserve(entry.target);
                     }
                 });
             }, observerOptions);
 
-            // 4. Start observing each card
-            cards.forEach(card => {
-                observer.observe(card);
+            const cards = document.querySelectorAll('.hidden-card');
+            cards.forEach(card => observer.observe(card));
+        const cursorDot = document.querySelector('.cursor-dot');
+            const cursorOutline = document.querySelector('.cursor-outline');
+
+            window.addEventListener('mousemove', (e) => {
+                const posX = e.clientX;
+                const posY = e.clientY;
+
+                // Dot follows instantly
+                cursorDot.style.left = `${posX}px`;
+                cursorDot.style.top = `${posY}px`;
+
+                // Outline follows with subtle animation
+                cursorOutline.animate({
+                    left: `${posX}px`,
+                    top: `${posY}px`
+                }, { duration: 500, fill: "forwards" });
+            });
+
+            // Hover effects for the cursor
+            const interactiveElements = document.querySelectorAll('a, button, .choose-card, .project-card, input');
+            interactiveElements.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    document.body.classList.add('hovering');
+                });
+                el.addEventListener('mouseleave', () => {
+                    document.body.classList.remove('hovering');
+                });
             });
         });
     </script>
